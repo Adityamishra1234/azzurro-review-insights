@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+env/
+*.egg-info/
+
+# Data and secrets
+backend/data/reviews.db
+backend/data/snapshots/
+backend/.env
+frontend/.env
+
+# Node
+node_modules/
+dist/
+.vite/
+
+# Editor and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Playwright
+.playwright/

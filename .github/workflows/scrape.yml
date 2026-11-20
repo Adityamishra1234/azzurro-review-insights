@@ -1,0 +1,38 @@
+name: Scheduled scrape
+
+# Runs the Booking.com scraper on a cron and commits the resulting SQLite
+# file back to the repository as an artefact. For a real deployment, a
+# managed job runner (Render cron, Fly scheduled machine) is a better fit.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        working-directory: backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+          python -m playwright install --with-deps chromium
+      - name: Run scrape
+        working-directory: backend
+        env:
+          SCRAPE_HEADLESS: "true"
+          SCRAPE_MAX_PAGES_PER_PROPERTY: "10"
+        run: python -m scripts.run_scrape
+      - name: Upload DB artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: reviews-db
+          path: backend/data/reviews.db
+          if-no-files-found: ignore

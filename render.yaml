@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: azzurro-review-api
+    env: docker
+    region: oregon
+    plan: starter
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: SCRAPE_HEADLESS
+        value: "true"
+      - key: SCRAPE_MAX_PAGES_PER_PROPERTY
+        value: "20"
+      - key: ENABLE_LLM_TOPICS
+        value: "false"
+      - key: CORS_ORIGINS
+        value: '["https://azzurro-review-insights.vercel.app"]'

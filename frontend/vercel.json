@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "https://azzurro-review-api.onrender.com/api/:path*" }
+  ]
+}
